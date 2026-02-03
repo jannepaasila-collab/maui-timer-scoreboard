@@ -30,4 +30,6 @@ Functional learning project. Not intended for production use.
 
 ## Screenshots
 
-
+![Main page](screenshots/mainpage.png)
+![Game page](screenshots/gamepage.png)
+![Team management](screenshots/teammanagementpage.png)
