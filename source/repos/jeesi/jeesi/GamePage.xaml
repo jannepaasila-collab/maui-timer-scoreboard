@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="jeesi.GamePage"
+             Title="Game Page"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="15" ColumnSpacing="50">
+
+            <!-- Grid rivit -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Grid sarakkeet -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Kotijoukkue -->
+            <StackLayout Grid.Row="1" Grid.Column="0" Spacing="10">
+                <Label Text="Valitse kotijoukkue"
+                       FontSize="Medium"
+                       TextColor="Black" />
+
+                <!-- Border + Picker (korjaa WinUI leikkautumisen) -->
+                <Border Stroke="LightGray"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 8"
+                        Padding="6"
+                        BackgroundColor="White">
+
+                    <Picker x:Name="HomeTeamPicker"
+                            Title="Kotijoukkue"
+                            ItemsSource="{Binding Teams}"
+                            ItemDisplayBinding="{Binding TeamName}"
+                            TextColor="Black"
+                            TitleColor="Black"
+                            BackgroundColor="White"
+                            VerticalOptions="Center"
+                            HeightRequest="{OnPlatform WinUI=68, Android=52, iOS=44}"
+                            MinimumHeightRequest="{OnPlatform WinUI=68, Android=52, iOS=44}" />
+                </Border>
+
+                <Button Text="Lukitse joukkueet"
+                        TextColor="Black"
+                        Clicked="OnStartGameClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="370"
+                        BorderColor="CadetBlue"
+                        BorderWidth="4">
+                    <Button.Shadow>
+                        <Shadow Brush="Black" Opacity="0.5" Offset="5,5" Radius="10"/>
+                    </Button.Shadow>
+                </Button>
+            </StackLayout>
+
+            <!-- Vierasjoukkue -->
+            <StackLayout Grid.Row="1" Grid.Column="1" Spacing="10">
+                <Label Text="Valitse vierasjoukkue"
+                       FontSize="Medium"
+                       TextColor="Black" />
+
+                <!-- Border + Picker (korjaa WinUI leikkautumisen) -->
+                <Border Stroke="LightGray"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 8"
+                        Padding="6"
+                        BackgroundColor="White">
+
+                    <Picker x:Name="AwayTeamPicker"
+                            Title="Vierasjoukkue"
+                            ItemsSource="{Binding Teams}"
+                            ItemDisplayBinding="{Binding TeamName}"
+                            TextColor="Black"
+                            TitleColor="Black"
+                            BackgroundColor="White"
+                            VerticalOptions="Center"
+                            HeightRequest="{OnPlatform WinUI=68, Android=52, iOS=44}"
+                            MinimumHeightRequest="{OnPlatform WinUI=68, Android=52, iOS=44}" />
+                </Border>
+            </StackLayout>
+
+            <!-- Pelin tilanne -->
+            <VerticalStackLayout Grid.Row="2" Grid.Column="0"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 Spacing="10">
+
+                <Label x:Name="HomeTeamLabel"
+                       Text="{Binding HomeTeamStatus}"
+                       FontSize="40"
+                       TextColor="Black"/>
+
+                <Button Text="Maali kotijoukkueelle"
+                        Clicked="OnAddHomeGoalClicked"
+                        BackgroundColor="Transparent"
+                        BorderColor="Gold"
+                        BorderWidth="4"
+                        TextColor="Black"
+                        WidthRequest="370"/>
+
+                <Label x:Name="AwayTeamLabel"
+                       Text="{Binding AwayTeamStatus}"
+                       FontSize="40"
+                       TextColor="Black"/>
+
+                <Button Text="Maali vierasjoukkueelle"
+                        Clicked="OnAddAwayGoalClicked"
+                        BackgroundColor="Transparent"
+                        BorderColor="Gold"
+                        BorderWidth="4"
+                        TextColor="Black"
+                        WidthRequest="370"/>
+            </VerticalStackLayout>
+
+            <!-- Pelikello -->
+            <VerticalStackLayout Grid.Row="2" Grid.Column="1"
+                                 HorizontalOptions="Center"
+                                 Spacing="10">
+
+                <Label x:Name="GameInfoLabel"
+                       Text="{Binding GameInfo}"
+                       FontSize="40"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+
+                <Label x:Name="TimerLabel"
+                       Text="00:00"
+                       FontSize="100"
+                       HorizontalOptions="Center"
+                       TextColor="Black"/>
+
+                <Label x:Name="SpeedLabel"
+                       Text="Ajastimen nopeus: 1000 ms"
+                       FontSize="Small"
+                       HorizontalOptions="Center"
+                       TextColor="Black"/>
+            </VerticalStackLayout>
+
+            <!-- Pelin hallinta -->
+            <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Spacing="10">
+
+                <Button Text="Käynnistä kello"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Clicked="OnStartClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="130"
+                        HeightRequest="100"
+                        CornerRadius="20"
+                        BorderColor="LightGreen"
+                        BorderWidth="4"/>
+
+                <Button Text="Lopeta peli"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Clicked="OnEndGameClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="120"
+                        HeightRequest="100"
+                        CornerRadius="20"
+                        BorderColor="Red"
+                        BorderWidth="4"/>
+
+                <Button Text="Resetoi peli"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Clicked="OnResetClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="120"
+                        HeightRequest="100"
+                        CornerRadius="20"
+                        BorderColor="Coral"
+                        BorderWidth="4"/>
+            </HorizontalStackLayout>
+
+            <!-- Nopeus -->
+            <HorizontalStackLayout Grid.Row="3" Grid.Column="1" Spacing="10">
+
+                <Button Text="Nopeuta >> kelloa"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Clicked="OnSpeedUpClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="130"
+                        HeightRequest="100"
+                        CornerRadius="20"
+                        BorderColor="LightGreen"
+                        BorderWidth="4"/>
+
+                <Button Text="|Tauko|"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Clicked="OnStopClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="120"
+                        HeightRequest="100"
+                        CornerRadius="20"
+                        BorderColor="Gray"
+                        BorderWidth="4"/>
+
+                <Button Text="Hidasta >| kelloa"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Clicked="OnSlowDownClicked"
+                        BackgroundColor="Transparent"
+                        WidthRequest="120"
+                        HeightRequest="100"
+                        CornerRadius="20"
+                        BorderColor="LightCoral"
+                        BorderWidth="4"/>
+            </HorizontalStackLayout>
+
+            <!-- Tilastot -->
+            <StackLayout Grid.Row="4" Grid.Column="0">
+                <Label x:Name="GameStatsLabel"
+                       Text="Tilastot"
+                       TextColor="Black"/>
+            </StackLayout>
+
+            <!-- Maalilista -->
+            <ListView x:Name="GoalRecordsListView"
+                      ItemsSource="{Binding CurrentGame.GoalRecords}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding}"
+                                  TextColor="Black"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Sulje -->
+            <StackLayout Grid.Row="5" Grid.Column="1" Padding="50">
+                <Button Text="Sulje ikkuna"
+                        TextColor="Black"
+                        FontAttributes="Bold"
+                        Clicked="OnCloseClicked"/>
+            </StackLayout>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

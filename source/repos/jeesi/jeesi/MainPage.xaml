@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="jeesi.MainPage"
+             BackgroundColor="White">
+
+    <VerticalStackLayout Padding="20" Spacing="30">
+        
+        <!--Ohjelman nimi-->
+        <Label Text="Palloilulajin ajastin ja tuloslaskuri"
+               FontSize="Large"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="DarkBlue"/>
+        
+        <!-- Etusivun toiminnot -->
+        <Label Text="Aloita uusi peli, tai siirry hallinnoimaan joukkueita ja pelaajia"
+               FontSize="Medium"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="Black"/>
+
+        <!-- Painike lajivalinnan kautta pelisivulle -->
+        <Button Text="Aloita uusi peli" TextColor="Black"
+                FontSize="Medium"
+                Clicked="OnOpenGameClicked"
+                BorderColor="Gold"
+                BorderWidth="4">
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.5"
+                        Offset="5,5"
+                        Radius="10" />
+            </Button.Shadow>
+        </Button>
+
+        <!-- Painike joukkueiden ja pelaajien hallintasivulle -->
+        <Button Text="Joukkueet ja pelaajat" TextColor="Black"
+                FontSize="Medium"
+                Clicked="OnOpenTeamManagementClicked"
+                BorderColor="Gold"
+                BorderWidth="4">
+            <Button.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.5"
+                        Offset="5,5"
+                        Radius="10" />
+            </Button.Shadow>
+        </Button>
+
+        <!--Pelattujen pelien tuloksia-->
+        <Label Text="Viimeksi pelatut pelit:" FontSize="Small" FontAttributes="Bold" />
+        <Label x:Name="ResultsLabel" Text="Ei pelattuja pelejä." FontSize="Small" />
+
+        <ListView x:Name="PlayersListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10" Spacing="20">
+                            <!-- Pelaajan numero -->
+                            <Label Text="{Binding PlayerNumber}" 
+                           FontAttributes="Bold" 
+                           TextColor="Blue" 
+                           WidthRequest="50" />
+
+                            <!-- Pelaajan nimi -->
+                            <Label Text="{Binding FirstName}" TextColor="Black"
+                           FontAttributes="Bold" 
+                           WidthRequest="100" />
+                            <Label Text="{Binding LastName}" TextColor="Black"
+                           WidthRequest="100" />
+
+                            <!-- Pelaajan maalit -->
+                            <Label Text="Maalit:" 
+                           FontAttributes="Italic" 
+                           TextColor="Gray" />
+                            <Label Text="{Binding Goals}" 
+                           FontAttributes="Bold" 
+                           TextColor="Green" />
+
+                            <!-- Pelaajan syötöt -->
+                            <Label Text="Syötöt:" 
+                           FontAttributes="Italic" 
+                           TextColor="Gray" />
+                            <Label Text="{Binding Assists}" 
+                           FontAttributes="Bold" 
+                           TextColor="Orange" />
+
+                            <!-- Pelaajan joukkue -->
+                            <Label Text="{Binding TeamName}" 
+                           FontAttributes="Italic" 
+                           TextColor="Purple" 
+                           WidthRequest="150" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>
+
